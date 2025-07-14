@@ -8,4 +8,9 @@ public class WFJS_Inputs : LcInputActions
 {
     [InputAction(KeyboardControl.Backslash, Name = "Toggle WFJS")]
     public InputAction Toggle { get; set; }
+    
+#if DEBUG
+    [InputAction(KeyboardControl.Quote, Name = "Test WFJS")]
+    public InputAction Test { get; set; }
+#endif
 }
