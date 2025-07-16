@@ -1,4 +1,8 @@
-﻿using HarmonyLib;
+﻿using System.Linq;
+using HarmonyLib;
+using UnityEngine;
+using UnityEngine.UI;
+
 // ReSharper disable InconsistentNaming
 
 namespace Lethal_Company_WFJS.Patches;
@@ -19,7 +23,20 @@ public static class Patch_MenuManager
 #if DEBUG
         if (WFJS_Main.Inputs.Test.WasReleasedThisFrame())
         {
-            __instance.MenuAudio.PlayOneShot(WFJS_Main.Jumpscare);
+            var canvasObj = new GameObject { name = "Test" };
+            //canvasObj.AddComponent<CanvasScaler>();
+            var canvas = canvasObj.AddComponent<Canvas>();
+
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+
+            var imageObj = new GameObject
+            {
+                name = "Image",
+                transform = { parent = canvasObj.transform }
+            };
+
+            var img = imageObj.AddComponent<RawImage>();
+            img.texture = WFJS_Main.TestTexture;
         }
 #endif
     }

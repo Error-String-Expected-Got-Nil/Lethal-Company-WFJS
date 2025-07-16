@@ -304,6 +304,10 @@
           <HintPath>packages\UnityEngine.Modules.2021.3.33\lib\net45\UnityEngine.TLSModule.dll</HintPath>
             <Private>False</Private>
         </Reference>
+        <Reference Include="UnityEngine.UI">
+          <HintPath>..\..\References\UnityEngine.UI.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
         <Reference Include="UnityEngine.UIElementsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
           <HintPath>packages\UnityEngine.Modules.2021.3.33\lib\net45\UnityEngine.UIElementsModule.dll</HintPath>
             <Private>False</Private>
@@ -394,6 +398,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Patches\Patch_HUDManager.cs" />
         <Compile Include="Patches\Patch_MenuManager.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
         <Compile Include="WFJS_Inputs.cs" />

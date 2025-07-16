@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 using BepInEx;
 using BepInEx.Logging;
@@ -21,6 +22,7 @@ public class WFJS_Main : BaseUnityPlugin
     public static bool Enabled = true;
 
     public static AudioClip Jumpscare;
+    public static Texture2D TestTexture = new(1, 1);
 
     public ManualLogSource Log;
 
@@ -64,5 +66,9 @@ public class WFJS_Main : BaseUnityPlugin
 
         // Set the audio clip's data.
         Jumpscare.SetData(buffer, 0);
+
+        var imagePath = Path.Combine(assembly.Location, "..", "assets", "nrg_crest.png");
+        var imageData = File.ReadAllBytes(imagePath);
+        TestTexture.LoadImage(imageData);
     }
 }
