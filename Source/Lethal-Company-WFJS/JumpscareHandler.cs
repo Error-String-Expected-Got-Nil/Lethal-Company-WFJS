@@ -11,7 +11,6 @@ public class JumpscareHandler
     private const float Offset = 6.0f;
     
     private readonly GameObject _canvasContainer;
-    private readonly GameObject _imageContainer;
     private readonly RectTransform _imageTransform;
     private readonly float _baseWidth;
     private readonly float _baseHeight;
@@ -24,13 +23,13 @@ public class JumpscareHandler
         var canvas = _canvasContainer.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
-        _imageContainer = new GameObject
+        var imageContainer = new GameObject
         {
             name = "JumpscareImageContainer",
             transform = { parent = _canvasContainer.transform }
         };
 
-        var image = _imageContainer.AddComponent<RawImage>();
+        var image = imageContainer.AddComponent<RawImage>();
         image.texture = WFJS_Main.JumpscareTexture;
 
         _imageTransform = image.rectTransform;
