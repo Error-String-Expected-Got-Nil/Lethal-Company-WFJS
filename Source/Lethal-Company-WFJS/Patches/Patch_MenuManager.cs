@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using HarmonyLib;
+﻿using HarmonyLib;
 using UnityEngine;
-using UnityEngine.UI;
 
 // ReSharper disable InconsistentNaming
 
@@ -10,9 +8,13 @@ namespace Lethal_Company_WFJS.Patches;
 [HarmonyPatch(typeof(MenuManager))]
 public static class Patch_MenuManager
 {
+#if DEBUG
+    private static JumpscareHandler _testJumpscare;    
+#endif
+    
     [HarmonyPatch("Update")]
     [HarmonyPostfix]
-    public static void Postfix_Update(MenuManager __instance)
+    public static void Postfix_Update()
     {
         if (WFJS_Main.Inputs.Toggle.WasReleasedThisFrame())
         {
@@ -21,22 +23,19 @@ public static class Patch_MenuManager
         }
 
 #if DEBUG
-        if (WFJS_Main.Inputs.Test.WasReleasedThisFrame())
+        if (_testJumpscare != null)
         {
-            var canvasObj = new GameObject { name = "Test" };
-            //canvasObj.AddComponent<CanvasScaler>();
-            var canvas = canvasObj.AddComponent<Canvas>();
-
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-
-            var imageObj = new GameObject
+            var finished = !_testJumpscare.Tick(Time.deltaTime);
+            if (finished)
             {
-                name = "Image",
-                transform = { parent = canvasObj.transform }
-            };
-
-            var img = imageObj.AddComponent<RawImage>();
-            img.texture = WFJS_Main.TestTexture;
+                _testJumpscare.Destroy();
+                _testJumpscare = null;
+            }
+        }
+        
+        if (WFJS_Main.Inputs.Test.WasReleasedThisFrame() && _testJumpscare == null)
+        {
+            _testJumpscare = new JumpscareHandler();
         }
 #endif
     }

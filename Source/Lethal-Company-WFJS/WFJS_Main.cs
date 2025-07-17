@@ -17,12 +17,13 @@ public class WFJS_Main : BaseUnityPlugin
     public const string PluginVersion = "1.0.0";
 
     internal static WFJS_Inputs Inputs;
+    internal static string AssetsPath = "";
     
     public static WFJS_Main Instance;
     public static bool Enabled = true;
 
-    public static AudioClip Jumpscare;
-    public static Texture2D TestTexture = new(1, 1);
+    public static AudioClip JumpscareAudio;
+    public static Texture2D JumpscareTexture = new(1, 1);
 
     public ManualLogSource Log;
 
@@ -41,16 +42,16 @@ public class WFJS_Main : BaseUnityPlugin
         harmony.PatchAll(assembly);
         
         Inputs = new WFJS_Inputs();
-
+        AssetsPath = Path.Combine(assembly.Location, "..", "assets");
+        
         // Reads the .wav file and loads the samples into an array, which is then loaded in to an audio clip.
         // There might be a better way to do this. If there is, I don't really care, because this is good enough.
         // Audio file is stored in "assets" folder in same location as the assembly.
-        var jumpscarePath = Path.Combine(assembly.Location, "..", "assets", "jumpscare.wav");
-        //Log.LogDebug($"Jumpscare path: {jumpscarePath}");
+        var jumpscarePath = Path.Combine(AssetsPath, "jumpscare.wav");
         using var reader = new WaveFileReader(jumpscarePath);
         
         // Values are hardcoded because the audio file is too. It's stereo with 2 channels at 44.1 kHz.
-        Jumpscare = AudioClip.Create("WFJS_Jumpscare", (int)reader.SampleCount, 2, 
+        JumpscareAudio = AudioClip.Create("WFJS_Jumpscare", (int)reader.SampleCount, 2, 
             44100, false);
 
         // Load audio data to buffer as floats. I don't like how many 2-float arrays are created and immediately
@@ -65,10 +66,10 @@ public class WFJS_Main : BaseUnityPlugin
         }
 
         // Set the audio clip's data.
-        Jumpscare.SetData(buffer, 0);
+        JumpscareAudio.SetData(buffer, 0);
 
-        var imagePath = Path.Combine(assembly.Location, "..", "assets", "nrg_crest.png");
-        var imageData = File.ReadAllBytes(imagePath);
-        TestTexture.LoadImage(imageData);
+        // Preloading the image and keeping it in memory at all times is kinda wasteful. If Unity isn't compressing it
+        // in memory, it'll take up about 44 MB. This isn't great, but it's not *terrible,* so I'm leaving it as-is.
+        JumpscareTexture.LoadImage(File.ReadAllBytes(Path.Combine(AssetsPath, "jumpscare.png")));
     }
 }

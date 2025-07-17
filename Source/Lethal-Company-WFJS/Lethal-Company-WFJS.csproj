@@ -398,6 +398,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="JumpscareHandler.cs" />
         <Compile Include="Patches\Patch_HUDManager.cs" />
         <Compile Include="Patches\Patch_MenuManager.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
