@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 using BepInEx;
 using BepInEx.Logging;
@@ -68,8 +67,8 @@ public class WFJS_Main : BaseUnityPlugin
         // Set the audio clip's data.
         JumpscareAudio.SetData(buffer, 0);
 
-        // Preloading the image and keeping it in memory at all times is kinda wasteful. If Unity isn't compressing it
-        // in memory, it'll take up about 44 MB. This isn't great, but it's not *terrible,* so I'm leaving it as-is.
+        // This texture will take up about 44 MB when uncompressed, but loading at the same time the jumpscare plays
+        // results in a noticeable stutter even on my nice computer, so it has to be preloaded here instead.
         JumpscareTexture.LoadImage(File.ReadAllBytes(Path.Combine(AssetsPath, "jumpscare.png")));
     }
 }

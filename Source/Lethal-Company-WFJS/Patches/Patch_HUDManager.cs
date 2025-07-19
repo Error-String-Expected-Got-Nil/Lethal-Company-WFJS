@@ -6,16 +6,20 @@ namespace Lethal_Company_WFJS.Patches;
 [HarmonyPatch(typeof(HUDManager))]
 public static class Patch_HUDManager
 {
-    [HarmonyPatch("Update")]
+    private static GameObject _jumpscareTriggerContainer;
+
+    [HarmonyPatch("OnEnable")]
     [HarmonyPostfix]
-    public static void Postfix_Update()
+    public static void Postfix_OnEnable()
     {
-#if DEBUG
-        if (WFJS_Main.Inputs.Test.WasReleasedThisFrame())
-        {
-            foreach(var source in Object.FindObjectsOfType<AudioSource>())
-                WFJS_Main.Instance.Log.LogDebug(source);
-        }
-#endif
+        _jumpscareTriggerContainer = new GameObject { name = "JumpscareTriggerContainer" };
+        _jumpscareTriggerContainer.AddComponent<JumpscareTriggerManager>();
+    }
+
+    [HarmonyPatch("OnDisable")]
+    [HarmonyPostfix]
+    public static void Postfix_OnDisable()
+    {
+        Object.Destroy(_jumpscareTriggerContainer);
     }
 }
