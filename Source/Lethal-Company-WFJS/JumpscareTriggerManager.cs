@@ -13,7 +13,6 @@ public class JumpscareTriggerManager : MonoBehaviour
 
     private void Awake() => StartCoroutine(RollCoroutine());
     
-
     private void Update()
     {
         // If there's an active jumpscare, tick it. If it returns false (jumpscare is over), tell it to destroy itself,
@@ -32,11 +31,13 @@ public class JumpscareTriggerManager : MonoBehaviour
     
     private static IEnumerator RollCoroutine()
     {
+        // Minute grace period on start so it's more likely to only trigger when the round is really going.
+        yield return new WaitForSeconds(60);
         while (true)
         {
-            yield return new WaitForSeconds(1);
             if (CanRollForJumpscare() && Random.value <= Chance)
                 _jumpscare = new JumpscareHandler(HUDManager.Instance.UIAudio);
+            yield return new WaitForSeconds(1);
         }
         // This loops forever intentionally.
         // ReSharper disable once IteratorNeverReturns
