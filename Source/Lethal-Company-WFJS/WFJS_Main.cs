@@ -45,7 +45,7 @@ public class WFJS_Main : BaseUnityPlugin
         
         // Reads the .wav file and loads the samples into an array, which is then loaded in to an audio clip.
         // There might be a better way to do this. If there is, I don't really care, because this is good enough.
-        // Audio file is stored in "assets" folder in same location as the assembly.
+        // Audio file is stored in same location as the assembly.
         var jumpscarePath = Path.Combine(AssetsPath, "jumpscare.wav");
         using var reader = new WaveFileReader(jumpscarePath);
         
