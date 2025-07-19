@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using UnityEngine;
 
 namespace Lethal_Company_WFJS.Patches;
 
@@ -9,6 +10,12 @@ public static class Patch_HUDManager
     [HarmonyPostfix]
     public static void Postfix_Update()
     {
-        
+#if DEBUG
+        if (WFJS_Main.Inputs.Test.WasReleasedThisFrame())
+        {
+            foreach(var source in Object.FindObjectsOfType<AudioSource>())
+                WFJS_Main.Instance.Log.LogDebug(source);
+        }
+#endif
     }
 }

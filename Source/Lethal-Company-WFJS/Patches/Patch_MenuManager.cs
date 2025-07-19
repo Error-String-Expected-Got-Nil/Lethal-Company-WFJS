@@ -14,7 +14,7 @@ public static class Patch_MenuManager
     
     [HarmonyPatch("Update")]
     [HarmonyPostfix]
-    public static void Postfix_Update()
+    public static void Postfix_Update(MenuManager __instance)
     {
         if (WFJS_Main.Inputs.Toggle.WasReleasedThisFrame())
         {
@@ -35,7 +35,7 @@ public static class Patch_MenuManager
         
         if (WFJS_Main.Inputs.Test.WasReleasedThisFrame() && _testJumpscare == null)
         {
-            _testJumpscare = new JumpscareHandler();
+            _testJumpscare = new JumpscareHandler(__instance.MenuAudio);
         }
 #endif
     }

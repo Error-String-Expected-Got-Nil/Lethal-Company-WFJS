@@ -15,9 +15,9 @@ public class JumpscareHandler
     private readonly float _baseWidth;
     private readonly float _baseHeight;
 
-    private float _stopwatch = 0f;
+    private float _stopwatch;
     
-    public JumpscareHandler()
+    public JumpscareHandler(AudioSource audioSource)
     {
         _canvasContainer = new GameObject { name = "JumpscareCanvasContainer" };
         var canvas = _canvasContainer.AddComponent<Canvas>();
@@ -39,7 +39,7 @@ public class JumpscareHandler
         _baseHeight = -Screen.height * Offset;
         _imageTransform.position = new Vector3(_baseWidth, _baseHeight);
         
-        // TODO: Also play jumpscare sound effect
+        audioSource.PlayOneShot(WFJS_Main.JumpscareAudio);
     }
 
     // Returns false if the jumpscare is over.
@@ -49,16 +49,16 @@ public class JumpscareHandler
 
         var frameIndex = (int)(_stopwatch / (1.0f / Framerate));
 
-        _imageTransform.position = new Vector3(_baseWidth, _baseHeight + Screen.height * frameIndex);
+        // Shows the final frame if frameIndex goes over the max index.
+        _imageTransform.position = new Vector3(_baseWidth, _baseHeight + Screen.height * Mathf.Min(frameIndex, Frames - 1));
 
-        return frameIndex < Frames;
-        
-        // TODO: Hold on final frame for a bit before ending jumpscare
+        // This makes it last for the duration of the animation + 1 second.
+        return frameIndex < Frames + Framerate;
     }
 
     public void Destroy()
     {
-        // Destroying an object also destroys all children, so we don't need to explicitly destroy ImageContainer.
+        // Destroying an object also destroys all children, so we don't need to explicitly destroy the image container.
         Object.Destroy(_canvasContainer);
     }
 }
