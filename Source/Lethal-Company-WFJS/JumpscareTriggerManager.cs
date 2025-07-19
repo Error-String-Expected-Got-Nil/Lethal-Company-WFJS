@@ -51,6 +51,7 @@ public class JumpscareTriggerManager : MonoBehaviour
            && _jumpscare == null
            && !GameNetworkManager.Instance.localPlayerController.isPlayerDead
            && StartOfRound.Instance.shipHasLanded
+           // Pretty sure shipHasLanded will always be false if shipIsLeaving is true, but can't hurt to verify.
            && !StartOfRound.Instance.shipIsLeaving
            && StartOfRound.Instance.currentLevel.PlanetName != "71 Gordion";
 }
