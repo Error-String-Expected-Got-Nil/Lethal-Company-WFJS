@@ -41,7 +41,7 @@ public class WFJS_Main : BaseUnityPlugin
         harmony.PatchAll(assembly);
         
         Inputs = new WFJS_Inputs();
-        AssetsPath = Path.Combine(assembly.Location, "..", "assets");
+        AssetsPath = Path.Combine(assembly.Location, "..");
         
         // Reads the .wav file and loads the samples into an array, which is then loaded in to an audio clip.
         // There might be a better way to do this. If there is, I don't really care, because this is good enough.
