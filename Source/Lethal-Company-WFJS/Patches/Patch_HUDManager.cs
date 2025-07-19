@@ -18,8 +18,5 @@ public static class Patch_HUDManager
 
     [HarmonyPatch("OnDisable")]
     [HarmonyPostfix]
-    public static void Postfix_OnDisable()
-    {
-        Object.Destroy(_jumpscareTriggerContainer);
-    }
+    public static void Postfix_OnDisable() => Object.Destroy(_jumpscareTriggerContainer);
 }

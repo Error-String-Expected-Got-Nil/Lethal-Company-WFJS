@@ -34,9 +34,7 @@ public static class Patch_MenuManager
         }
         
         if (WFJS_Main.Inputs.Test.WasReleasedThisFrame() && _testJumpscare == null)
-        {
             _testJumpscare = new JumpscareHandler(__instance.MenuAudio);
-        }
 #endif
     }
 }

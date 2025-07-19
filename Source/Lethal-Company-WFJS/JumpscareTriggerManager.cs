@@ -11,10 +11,8 @@ public class JumpscareTriggerManager : MonoBehaviour
 
     private static JumpscareHandler _jumpscare;
 
-    private void Awake()
-    {
-        StartCoroutine(RollCoroutine());
-    }
+    private void Awake() => StartCoroutine(RollCoroutine());
+    
 
     private void Update()
     {
@@ -28,9 +26,7 @@ public class JumpscareTriggerManager : MonoBehaviour
         
 #if DEBUG
         if (WFJS_Main.Inputs.Test.WasReleasedThisFrame())
-        {
-            _jumpscare ??= new JumpscareHandler(HUDManager.Instance.UIAudio);
-        }
+           _jumpscare ??= new JumpscareHandler(HUDManager.Instance.UIAudio);
 #endif
     }
     

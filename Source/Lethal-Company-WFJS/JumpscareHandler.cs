@@ -51,15 +51,13 @@ public class JumpscareHandler
         var frameIndex = (int)(_stopwatch / (1.0f / Framerate));
 
         // Shows the final frame if frameIndex goes over the max index.
-        _imageTransform.position = new Vector3(_baseWidth, _baseHeight + Screen.height * Mathf.Min(frameIndex, Frames - 1));
+        _imageTransform.position = new Vector3(_baseWidth, _baseHeight + Screen.height 
+            * Mathf.Min(frameIndex, Frames - 1));
 
         // This makes it last for the duration of the animation + 1 second.
         return frameIndex < Frames + Framerate;
     }
 
-    public void Destroy()
-    {
-        // Destroying an object also destroys all children, so we don't need to explicitly destroy the image container.
-        Object.Destroy(_canvasContainer);
-    }
+    // Destroying an object also destroys all children, so we don't need to explicitly destroy the image container.
+    public void Destroy() => Object.Destroy(_canvasContainer);
 }
