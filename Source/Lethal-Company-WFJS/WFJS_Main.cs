@@ -13,7 +13,7 @@ public class WFJS_Main : BaseUnityPlugin
 {
     public const string PluginGuid = "esegn.wfjs";
     public const string PluginName = "WFJS";
-    public const string PluginVersion = "1.0.0";
+    public const string PluginVersion = "1.0.2";
 
     internal static WFJS_Inputs Inputs;
     internal static string AssetsPath = "";

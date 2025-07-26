@@ -7,7 +7,7 @@ namespace Lethal_Company_WFJS;
 public class JumpscareTriggerManager : MonoBehaviour
 {
     // Chance of jumpscare occuring each second when conditions are met.
-    private const float Chance = 1f / 10000f;
+    private const float Chance = 1f / 5000f;
 
     private static JumpscareHandler _jumpscare;
 
